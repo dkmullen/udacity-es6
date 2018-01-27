@@ -78,3 +78,31 @@ console.log(average(2, 6));
 console.log(average(2, 3, 3, 5, 7, 10));
 console.log(average(7, 1432, 12, 13, 100));
 console.log(average());
+
+/* ----------------------------- Default function parameters
+Default function parameters are quite easy to read since they're placed in the function's parameter list:
+*/
+
+function greet(name = 'Student', greeting = 'Welcome') {
+  console.log(`${greeting} ${name}!`);
+}
+
+greet(); // Welcome Student!
+greet('James'); // Welcome James!
+greet('Richard', 'Howdy'); // Howdy Richard!
+
+/*Returns:
+Welcome Student!
+Welcome James!
+Howdy Richard!
+*/
+
+function buildHouse({floors = 1, color = 'red', walls = 'brick'} = {}) {
+  console.log(`Your house has ${floors} floor(s) with ${color} ${walls} walls.`);
+}
+buildHouse({floors: 3, color: 'yellow'});
+
+function fooBar() {
+  return 'fooBar';
+}
+fooBar();
