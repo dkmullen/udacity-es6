@@ -1,74 +1,47 @@
 /*jshint esversion: 6 */
 
 /*
---------------------Classes -------------
-Classes in ES6 are an 'illusion'. It's prototype inheritance under the hood
+Subclasses with ES6
+Now that we've looked at creating classes in JavaScript. Let's use the new super and extends keywords to extend a class.
 */
-
-// The ES5 way
-// The constructor function that will create new plane objects - cap letter by convention
-function Plane(numEngines) {
-  this.numEngines = numEngines;
-  this.enginesActive = false;
-}
-
-// Prototype object - contains methods "inherited" by all instances
-Plane.prototype.startEngines = function () {
-  console.log(`Starting ${this.numEngines} engines`);
-  this.enginesActive = true;
-};
-
-// Keyword 'new' calls the constructor function, above
-const richardsPlane = new Plane(1);
-richardsPlane.startEngines();
-
-const jamesPlane = new Plane(4);
-jamesPlane.startEngines();
-
-// The ES6 way
-
-// Note that the constructor and the methods are placed inside the class
-class Plane2 { // even with new syntax, this is just a function
-  constructor(numEngines) {
-    this.numEngines = numEngines;
-    this.enginesActive = false;
+class Tree {
+  constructor(size = '10', leaves = {spring: 'green', summer: 'green', fall: 'orange', winter: null}) {
+    this.size = size;
+    this.leaves = leaves;
+    this.leafColor = null;
   }
 
-  startEngines() { // methods are still just added to the prototype, as above
-    console.log(`Starting ${this.numEngines} engines, all yall`);
-    this.enginesActive = true;
+  changeSeason(season) {
+    this.leafColor = this.leaves[season];
+    if (season === 'spring') {
+      this.size += 1;
+    }
   }
 }
 
-const billPlane = new Plane2(6);
-billPlane.startEngines();
-
-/* Static methods
-To add a static method, the keyword static is placed in front of the method name. Look at the badWeather() method in the code below.
-*/
-
-class Plane3 {
-  constructor(numEngines) {
-    this.numEngines = numEngines;
-    this.enginesActive = false;
+class Maple extends Tree {
+  constructor(syrupQty = 15, size, leaves) {
+    super(size, leaves);
+    this.syrupQty = syrupQty;
   }
 
-  static badWeather(planes) {
-    for (let plane of planes) {
-      console.log('grounded');
-      plane.enginesActive = false;
+  changeSeason(season) {
+    super.changeSeason(season);
+    if (season === 'spring') {
+      this.syrupQty += 1;
     }
   }
 
-  startEngines() {
-    console.log('starting engines…');
-    this.enginesActive = true;
+  gatherSyrup() {
+    this.syrupQty -= 3;
   }
 }
 
-const stevePlane = new Plane3(6);
-stevePlane.startEngines();
+const myMaple = new Maple(15, 5);
+myMaple.changeSeason('fall');
+myMaple.gatherSyrup();
+myMaple.changeSeason('spring');
+
 /*
-See how badWeather() has the word static in front of it while startEngines() doesn't? That makes badWeather() a method that's accessed directly on the Plane class, so you can call it like this:
+Both Tree and Maple are JavaScript classes. The Maple class is a "subclass" of Tree and uses the extends keyword to set itself as a "subclass". To get from the "subclass" to the parent class, the super keyword is used. Did you notice that super was used in two different ways? In Maple's constructor method, super is used as a function. In Maple's changeSeason() method, super is used as an object!
 */
-Plane3.badWeather([stevePlane]);
