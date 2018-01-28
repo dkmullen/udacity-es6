@@ -1,0 +1,23 @@
+{
+  "name": "es6-notes",
+  "version": "1.0.0",
+  "description": "Notes for Udacity ES6 Course",
+  "main": "",
+  "scripts": {
+    "build": "babel ES6 -d ES5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dkmullen/udacity-es6.git"
+  },
+  "author": "DKM",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dkmullen/udacity-es6/issues"
+  },
+  "homepage": "https://github.com/dkmullen/udacity-es6#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1"
+  }
+}
