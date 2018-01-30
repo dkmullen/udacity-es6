@@ -17,3 +17,61 @@ new Promise(function(resolve) {
 // called by then and catch
 // BTW catch gets called if there is a JS error in the body of the promise
 // also, if resove passes a promise, that promise will resolve before moving to next
+
+/*
+Working w/ document.readyState
+Has three states:
+  Loading, interractive (HTML is here, still working on CSS, images) and complete
+Fires 'readystatechange' on changes
+It can be useful to use a promise to run code when state becomes interractive
+*/
+
+// The old way:
+function successCallback(result) {
+  console.log("It succeeded with " + result);
+}
+
+function failureCallback(error) {
+  console.log("It failed with " + error);
+}
+
+doSomething(successCallback, failureCallback);
+
+// the new
+doSomething().then(successCallback, failureCallback);
+// Modern functions return a promise you can attach your callbacks to.
+
+function getSomething() {
+  // whatevs
+}
+
+getSomething()
+  .then(() => {
+
+  })
+  .catch(() => {
+
+  });
+
+  // Chaining
+  doSomething().then(function(result) {
+  return doSomethingElse(result);
+})
+.then(function(newResult) {
+  return doThirdThing(newResult);
+})
+.then(function(finalResult) {
+  console.log('Got the final result: ' + finalResult);
+})
+.catch(failureCallback);
+
+// or, in ES6
+doSomething()
+.then(result => doSomethingElse(result))
+.then(newResult => doThirdThing(newResult))
+.then(finalResult => {
+  console.log(`Got the final result: ${finalResult}`);
+})
+.catch(failureCallback);
+
+// You can chain .then() after .catch() too.
